@@ -91,18 +91,10 @@ int insertSortedLL(LinkedList *ll, int item)
 	int index = 0;
 	ListNode *cur;
 
-	if (ll->size == 0)
-	{
-		insertNode(ll, 0, item);
-		return 0;
-	}
-
 	while ((cur = findNode(ll, index)) != NULL)
 	{
 		if (cur->item == item)
-		{
 			return -1;
-		}
 
 		if (cur->item > item)
 		{
