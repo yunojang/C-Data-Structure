@@ -111,6 +111,8 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
+	removeAllItemsFromQueue(q);
+
 	ListNode *cur = ll->head;
 	while (cur != NULL)
 	{
