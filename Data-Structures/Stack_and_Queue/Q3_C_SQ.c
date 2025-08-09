@@ -111,7 +111,7 @@ int isStackPairwiseConsecutive(Stack *s)
 	if (size < 2 || size % 2 == 1)
 		return 0;
 
-	while (peek(s))
+	while (s->ll.size) // peek 으로 체크 시 0 대응 못함
 	{
 		int item1 = pop(s);
 		int item2 = pop(s);
