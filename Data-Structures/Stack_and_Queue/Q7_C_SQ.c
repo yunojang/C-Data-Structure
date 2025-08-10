@@ -101,6 +101,11 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
+	char pair[256] = {0};
+	pair[')'] = '(';
+	pair['}'] = '{';
+	pair[']'] = '[';
+
 	Stack s;
 	s.ll.head = NULL;
 	s.ll.size = 0;
@@ -109,31 +114,43 @@ int balanced(char *expression)
 	while (*(expression + index) != '\0')
 	{
 		char cur = expression[index++];
-		if (cur == ')' || cur == ']' || cur == '}')
+		if (pair[cur] != 0)
 		{
 			char popped = pop(&s);
-			switch (cur)
+			if (popped != pair[cur])
 			{
-			case ')':
-				if (popped != '(')
-					return 1;
-				break;
-			case ']':
-				if (popped != '[')
-					return 1;
-				break;
-			case '}':
-				if (popped != '{')
-					return 1;
-				break;
-			default:
 				return 1;
-				break;
 			}
 		}
 		else
 			push(&s, cur);
+
+		// if (cur == ')' || cur == ']' || cur == '}')
+		// {
+		// 	char popped = pop(&s);
+		// 	switch (cur)
+		// 	{
+		// 	case ')':
+		// 		if (popped != '(')
+		// 			return 1;
+		// 		break;
+		// 	case ']':
+		// 		if (popped != '[')
+		// 			return 1;
+		// 		break;
+		// 	case '}':
+		// 		if (popped != '{')
+		// 			return 1;
+		// 		break;
+		// 	default:
+		// 		return 1;
+		// 		break;
+		// 	}
+		// }
+		// else
+		// 	push(&s, cur);
 	}
+
 	if (s.ll.size == 0)
 		return 0;
 	else
