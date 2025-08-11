@@ -109,10 +109,8 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-	int cur = MIN_INT;
-	while (cur != value)
-		cur = pop(s);
-	push(s, cur);
+	while (!isEmptyStack(s) && peek(s) != value)
+		pop(s);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
