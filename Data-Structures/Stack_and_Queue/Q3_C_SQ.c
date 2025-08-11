@@ -111,13 +111,14 @@ int isStackPairwiseConsecutive(Stack *s)
 	if (size < 2 || size % 2 == 1)
 		return 0;
 
+	int is_pair = 1;
 	while (s->ll.size) // peek 으로 체크 시 0 대응 못함
 	{
 		int item1 = pop(s);
 		int item2 = pop(s);
-		int diff = item1 - item2;
-		return diff == 1 || diff == -1;
+		is_pair &= abs(item1 - item2) == 1;
 	}
+	return is_pair;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
