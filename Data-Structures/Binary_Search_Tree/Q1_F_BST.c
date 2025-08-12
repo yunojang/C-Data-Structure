@@ -89,15 +89,20 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+Queue makeQueue()
+{
+	Queue q;
+	q.head = NULL;
+	q.tail = NULL;
+	return q;
+}
 
 // bsp
 void levelOrderTraversal(BSTNode *root)
 {
-	if (root == NULL)
-		return;
-
-	Queue q;
-	enqueue(&(q.head), &(q.tail), root);
+	Queue q = makeQueue();
+	if (root != NULL)
+		enqueue(&(q.head), &(q.tail), root);
 
 	while (q.head)
 	{
