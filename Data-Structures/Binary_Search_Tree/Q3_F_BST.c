@@ -34,7 +34,7 @@ typedef struct _stack
 // You should not change the prototypes of these functions
 void preOrderIterative(BSTNode *root);
 
-void insertBSTNode(BSTNode **node, int value);
+void insert_bstnode(BSTNode **node, int value);
 
 // You may use the following functions or you may write your own
 void push(Stack *stack, BSTNode *node);
@@ -68,7 +68,7 @@ int main()
 		case 1:
 			printf("Input an integer that you want to insert into the Binary Search Tree: ");
 			scanf("%d", &i);
-			insertBSTNode(&root, i);
+			insert_bstnode(&root, i);
 			break;
 		case 2:
 			printf("The resulting pre-order traversal of the binary search tree is: ");
@@ -108,7 +108,7 @@ void preOrderIterative(BSTNode *root)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void insertBSTNode(BSTNode **node, int value)
+void insert_bstnode(BSTNode **node, int value)
 {
 	if (*node == NULL)
 	{
@@ -125,11 +125,11 @@ void insertBSTNode(BSTNode **node, int value)
 	{
 		if (value < (*node)->item)
 		{
-			insertBSTNode(&((*node)->left), value);
+			insert_bstnode(&((*node)->left), value);
 		}
 		else if (value > (*node)->item)
 		{
-			insertBSTNode(&((*node)->right), value);
+			insert_bstnode(&((*node)->right), value);
 		}
 		else
 			return;

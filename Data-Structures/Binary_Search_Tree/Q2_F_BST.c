@@ -34,7 +34,7 @@ typedef struct _stack
 // You should not change the prototypes of these functions
 void inOrderTraversal(BSTNode *node);
 
-void insertBSTNode(BSTNode **node, int value);
+void insert_bstnode(BSTNode **node, int value);
 
 void push(Stack *stack, BSTNode *node);
 BSTNode *pop(Stack *s);
@@ -67,7 +67,7 @@ int main()
 		case 1:
 			printf("Input an integer that you want to insert into the Binary Search Tree: ");
 			scanf("%d", &i);
-			insertBSTNode(&root, i);
+			insert_bstnode(&root, i);
 			break;
 		case 2:
 			printf("The resulting in-order traversal of the binary search tree is: ");
@@ -94,33 +94,24 @@ void inOrderTraversal(BSTNode *root)
 	stk.top = NULL;
 
 	BSTNode *cur = root;
-	while (cur != NULL)
+	while (cur != NULL || !isEmpty(&stk))
 	{
-		push(&stk, cur);
-		cur = cur->left;
-	}
-
-	while (!isEmpty(&stk))
-	{
-		BSTNode *popped = pop(&stk);
-		printf("%d ", popped->item);
-		if (popped->right)
+		while (cur != NULL)
 		{
-			cur = popped->right;
-			while (cur != NULL)
-			{
-				push(&stk, cur);
-				cur = cur->left;
-			}
+			push(&stk, cur);
+			cur = cur->left;
 		}
-	}
 
+		cur = pop(&stk);
+		printf("%d ", cur->item);
+		cur = cur->right;
+	}
 	stk.top = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void insertBSTNode(BSTNode **node, int value)
+void insert_bstnode(BSTNode **node, int value)
 {
 	if (*node == NULL)
 	{
@@ -137,11 +128,11 @@ void insertBSTNode(BSTNode **node, int value)
 	{
 		if (value < (*node)->item)
 		{
-			insertBSTNode(&((*node)->left), value);
+			insert_bstnode(&((*node)->left), value);
 		}
 		else if (value > (*node)->item)
 		{
-			insertBSTNode(&((*node)->right), value);
+			insert_bstnode(&((*node)->right), value);
 		}
 		else
 			return;

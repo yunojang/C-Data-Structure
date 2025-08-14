@@ -37,7 +37,7 @@ typedef struct _queue
 // You should not change the prototypes of these functions
 void levelOrderTraversal(BSTNode *node);
 
-void insertBSTNode(BSTNode **node, int value);
+void insert_bstnode(BSTNode **node, int value);
 
 BSTNode *dequeue(QueueNode **head, QueueNode **tail);
 void enqueue(QueueNode **head, QueueNode **tail, BSTNode *node);
@@ -69,7 +69,7 @@ int main()
 		case 1:
 			printf("Input an integer that you want to insert into the Binary Search Tree: ");
 			scanf("%d", &i);
-			insertBSTNode(&root, i);
+			insert_bstnode(&root, i);
 			break;
 		case 2:
 			printf("The resulting level-order traversal of the binary search tree is: ");
@@ -89,35 +89,29 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-Queue makeQueue()
-{
-	Queue q;
-	q.head = NULL;
-	q.tail = NULL;
-	return q;
-}
-
 // bsp
 void levelOrderTraversal(BSTNode *root)
 {
-	Queue q = makeQueue();
-	if (root != NULL)
-		enqueue(&(q.head), &(q.tail), root);
+	Queue q = {NULL, NULL};
 
+	if (root == NULL)
+		return;
+
+	enqueue(&(q.head), &(q.tail), root);
 	while (q.head)
 	{
-		BSTNode *cur = dequeue(&(q.head), &(q.tail));
+		BSTNode *cur = dequeue(&q.head, &q.tail);
 		printf("%d ", cur->item);
 		if (cur->left != NULL)
-			enqueue(&(q.head), &(q.tail), cur->left);
+			enqueue(&q.head, &q.tail, cur->left);
 		if (cur->right != NULL)
-			enqueue(&(q.head), &(q.tail), cur->right);
+			enqueue(&q.head, &q.tail, cur->right);
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void insertBSTNode(BSTNode **node, int value)
+void insert_bstnode(BSTNode **node, int value)
 {
 	if (*node == NULL)
 	{
@@ -134,11 +128,11 @@ void insertBSTNode(BSTNode **node, int value)
 	{
 		if (value < (*node)->item)
 		{
-			insertBSTNode(&((*node)->left), value);
+			insert_bstnode(&((*node)->left), value);
 		}
 		else if (value > (*node)->item)
 		{
-			insertBSTNode(&((*node)->right), value);
+			insert_bstnode(&((*node)->right), value);
 		}
 		else
 			return;

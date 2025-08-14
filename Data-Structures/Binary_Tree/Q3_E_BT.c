@@ -95,14 +95,15 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+#define HAS(v) ((v) != NULL ? 1 : 0)
 
 int countOneChildNodes(BTNode *node)
 {
     if (node == NULL)
         return 0;
 
-    int hasLeft = node->left != NULL ? 1 : 0;
-    int hasRight = node->right != NULL ? 1 : 0;
+    int hasLeft = HAS(node->left);
+    int hasRight = HAS(node->right);
 
     return (hasLeft ^ hasRight) + countOneChildNodes(node->left) + countOneChildNodes(node->right);
 }
