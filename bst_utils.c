@@ -90,58 +90,39 @@ void delete_bstnode(BSTNode **node, int value)
         return;
     }
 
-    int node_item = (*node)->item;
+    BSTNode *cur = *node;
+    int node_item = cur->item;
+
     if (node_item == value)
     {
-        BSTNode *l = (*node)->left;
-        BSTNode *r = (*node)->right;
-        int children = HAS(l) + HAS(r);
+        BSTNode *lmax = max_node(cur->left);
+        BSTNode *rmin = min_node(cur->right);
+        BSTNode *replace_node = (lmax ? lmax : (rmin ? rmin : NULL));
 
-        if (children == 0)
+        if (replace_node == NULL)
         {
-            free(*node);
+            free(cur);
             *node = NULL;
+            return;
         }
-        else if (children == 1)
+        int replace_value = replace_node->item;
+        cur->item = replace_value;
+
+        if (lmax)
         {
-            BSTNode *child = l ? l : r;
-            free(*node);
-            *node = child;
+            delete_bstnode(&(cur->left), replace_value);
         }
         else
         {
-            BSTNode *lmax = max_node(l);
-            (*node)->item = lmax->item;
-            delete_bstnode(&((*node)->left), lmax->item);
+            delete_bstnode(&(cur->right), replace_value);
         }
     }
     else if (value < node_item)
     {
-        delete_bstnode(&((*node)->left), value);
+        delete_bstnode(&(cur->left), value);
     }
     else
     {
-        delete_bstnode(&((*node)->right), value);
+        delete_bstnode(&(cur->right), value);
     }
-}
-
-int main()
-{
-    BSTNode *root = make_node(3);
-
-    insert_bstnode(&root, 1);
-    insert_bstnode(&root, 4);
-    insert_bstnode(&root, 5);
-    insert_bstnode(&root, 9);
-    insert_bstnode(&root, 2);
-    insert_bstnode(&root, 7);
-    insert_bstnode(&root, 6);
-
-    inorder_travasal(root);
-    printf("\n");
-    delete_bstnode(&root, 4);
-    inorder_travasal(root);
-    printf("\n");
-
-    return 0;
 }
